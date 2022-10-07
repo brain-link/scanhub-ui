@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useQuery } from "react-query";
 import { Patient } from './Interfaces'
 
@@ -43,10 +43,9 @@ export function PatientTable() {
     const { data: patients, isSuccess } = useQuery<Patient[]>("patients/");
 
     if (!isSuccess) {
-        // return <div> Loading... </div>;
         return (
-            <CContainer>
-                <CSpinner variant="grow"/>
+            <CContainer fluid className='d-flex justify-content-center mt-5'>
+                <CSpinner />
             </CContainer>
         )
     }
