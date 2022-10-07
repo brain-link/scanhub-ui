@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { version } from '../utils/version'
@@ -19,7 +20,11 @@ import {
 
 export function Navigation() {
 
-    const [visible, setVisible] = useState(false)
+    const [activeElement, setActiveElement] = useState(0)
+
+    const updateActiveElement = (id) => {
+        setActiveElement(activeElement !== id ? id : -1)
+    }
 
     return (
         <>
@@ -37,26 +42,22 @@ export function Navigation() {
                     />
                 </CNavbarBrand>
 
-                {/* <CNavbarBrand className="me-5">
-                    ScanHub
-                </CNavbarBrand> */}
-
-                <CNavbarToggler
-                    aria-label="Toggle navigation"
-                    aria-expanded={visible}
-                    onClick={() => setVisible(!visible)}
-                />
-
-                <CCollapse className="navbar-collapse d-flex justify-content-between" visible={visible}>
+                <CContainer className='d-flex justify-content-between'>
                     <CNavbarNav>
                         <CNavItem>
-                            <CNavLink to="/" active component={Link}>Dashboard</CNavLink>
+                            <CNavLink to="/" component={Link} active={0 === activeElement} onClick={() => updateActiveElement(0)}>
+                                Dashboard
+                            </CNavLink>
                         </CNavItem>
                         <CNavItem>
-                            <CNavLink to='/patients' component={Link}>Patients</CNavLink>
+                            <CNavLink to='/patients' component={Link} active={1 === activeElement} onClick={() => updateActiveElement(1)}>
+                                Patients
+                            </CNavLink>
                         </CNavItem>
                         <CNavItem>
-                            <CNavLink to='/devices' component={Link}>Devices</CNavLink>
+                            <CNavLink to='/devices' component={Link} active={2 === activeElement} onClick={() => updateActiveElement(2)}>
+                                Devices
+                            </CNavLink>
                         </CNavItem>
                     </CNavbarNav>
 
@@ -70,28 +71,14 @@ export function Navigation() {
                             </CButton>
                         </CForm>
                     </CNavbarNav>
+                </CContainer>
 
-                </CCollapse>
             </CContainer>
         </CNavbar>
 
         <main>
             <Outlet />
         </main>
-
-        {/* <CFooter position='fixed' className='align-middle'>
-        <div>
-            <span><small>ScanHub &copy; 2022, Powered by BRAIN-LINK Medical Software Technologies</small></span>
-            <CNavbarBrand href="https://www.brain-link.de/">
-                <img
-                    src='https://avatars.githubusercontent.com/u/27105562?s=200&v=4'
-                    alt=""
-                    height="30"
-                    className="d-inline-block ms-2"
-                />
-            </CNavbarBrand>
-        </div>
-        </CFooter> */}
 
         </>
     )
