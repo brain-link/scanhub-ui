@@ -12,13 +12,15 @@ import { GlobalStyles } from '@mui/system';
 import { CssVarsProvider } from '@mui/joy/styles';
 
 import Navigation from '../components/Navigation';
+import theme from '../utils/theme';
 
 
 export default function App() {
   return (
     <CssVarsProvider
-      // defaultMode="dark"
+      defaultMode="dark"
       disableTransitionOnChange
+      theme={theme}
     >
       <CssBaseline />
       <GlobalStyles
@@ -41,6 +43,7 @@ export default function App() {
       <Box sx={{ 
           m: 0,
           p: 0,
+          // pt: 8,
           gap: 2,
           justifyContent: 'start',
           display: 'flex',

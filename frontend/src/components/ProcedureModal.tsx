@@ -40,14 +40,9 @@ function ProcedureModal(props: ModalProps<Procedure>) {
             exam_id: Number(params.examId),
             name: "",
             status: "",
+            // jobs: [],
             datetime_created: new Date(),
         });
-
-    React.useEffect(() => {
-        // Update exam id to prevent NaN value, component is loaded when no exam exists
-        // Prevents invalid axios request
-        setProcedure({...procedure, exam_id: Number(params.examId)})
-    }, [params.examId])
 
     const title = props.data ? "Update Procedure" : "Create Procedure"
 
@@ -108,8 +103,6 @@ function ProcedureModal(props: ModalProps<Procedure>) {
                         onClick={
                             (event) => {
                                 event.preventDefault();
-                                // Debug statement:
-                                // console.log("Create/update procedure: ", procedure);
                                 props.handleModalSubmit(procedure);
                                 props.setDialogOpen(false);
                             }

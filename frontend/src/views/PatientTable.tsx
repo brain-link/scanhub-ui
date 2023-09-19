@@ -10,9 +10,7 @@ import * as React from 'react';
 
 import Typography from '@mui/joy/Typography';
 import Container from '@mui/system/Container';
-import Sheet from '@mui/joy/Sheet';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import IconButton from '@mui/joy/IconButton';
 import LinearProgress from '@mui/joy/LinearProgress';
 import Modal from '@mui/joy/Modal';
@@ -85,7 +83,7 @@ export default function PatientTable() {
     }
 
     return (
-        <Box sx={{ m: 3 }}>
+        <Box sx={{ m: 5 }}>
 
             <Modal 
                 keepMounted
@@ -154,85 +152,53 @@ export default function PatientTable() {
                 </ModalDialog>
             </Modal>
 
-            <Stack direction="row" sx={{ justifyContent: 'space-between', mb: 2 }} >
-                <Typography level="title-md">List of Patients</Typography>
-                <IconButton size='sm' variant='outlined'>
-                    <AddSharpIcon onClick={() => setDialogOpen(true)}/>
-                </IconButton>
-            </Stack>
             
-            
-            <Sheet variant="outlined" sx={{ p: 1, borderRadius: 'sm' }}>
+            <IconButton size='sm' variant='outlined'>
+                <AddSharpIcon onClick={() => setDialogOpen(true)}/>
+            </IconButton>
 
-                <Table
-                    hoverRow
-                    borderAxis="xBetween"
-                    color="neutral"
-                    size="sm"
-                    stickyHeader
-                    variant="plain"
-                >
-                    <thead>
-                        <tr>
-                            <th style={{ width: '4%' }}>ID</th>
-                            <th>Name</th>
-                            <th style={{ width: '4%' }}>Sex</th>
-                            <th style={{ width: '8%' }}>Birthday</th>
-                            <th>Issuer</th>
-                            <th>Status</th>
-                            <th>Comment</th>
-                            <th style={{ width: '8%' }}>Admission</th>
-                            <th style={{ width: '8%' }}>Updated</th>
-                            <th style={{ width: '15%' }}></th>
+            <Table
+                hoverRow
+                borderAxis="xBetween"
+                color="neutral"
+                size="sm"
+                stickyHeader
+                variant="plain"
+            >
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Sex</th>
+                        <th>Birthday</th>
+                        <th>Issuer</th>
+                        <th>Status</th>
+                        <th>Comment</th>
+                        <th>Admission</th>
+                        <th>Updated</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    { patients?.map(patient => (
+                        <tr
+                            onClick={() => {navigate(`/patients/${patient.id}`)}}
+                            key={ patient.id }
+                        >
+                            <td>{ patient.id }</td>
+                            <td>{ patient.name }</td>
+                            <td>{ patient.sex }</td>
+                            <td>{ patient.birth_date }</td>
+                            <td>{ patient.issuer }</td>
+                            <td>{ patient.status }</td>
+                            <td>{ patient.comment }</td>
+                            <td>{ new Date(patient.datetime_created).toDateString() }</td>
+                            <td>{ patient.datetime_updated ? new Date(patient.datetime_updated).toDateString() : '-' }</td>
                         </tr>
-                    </thead>
+                    )) }
+                </tbody>
 
-                    <tbody>
-                        { patients?.map(patient => (
-                            <tr key={ patient.id } >
-
-                                <td>{ patient.id }</td>
-                                <td>{ patient.name }</td>
-                                <td>{ patient.sex }</td>
-                                <td>{ patient.birth_date }</td>
-                                <td>{ patient.issuer }</td>
-                                <td>{ patient.status }</td>
-                                <td>{ patient.comment }</td>
-                                <td>{ new Date(patient.datetime_created).toDateString() }</td>
-                                <td>{ patient.datetime_updated ? new Date(patient.datetime_updated).toDateString() : '-' }</td>
-                                
-                                <td>
-                                    <Box sx={{ display: 'flex', gap: 1 }}>
-                                        <Button 
-                                            size="sm"
-                                            sx={{ zIndex: 'snackbar' }} 
-                                            variant="soft" 
-                                            endDecorator={<KeyboardArrowRight />} 
-                                            color="neutral"
-                                            onClick={() => {navigate(`/patients/dcmview/${patient.id}`)}}
-                                        >
-                                            View
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            sx={{ zIndex: 'snackbar' }} 
-                                            variant="soft" 
-                                            endDecorator={<KeyboardArrowRight />} 
-                                            color="neutral"
-                                            onClick={() => {navigate(`/patients/${patient.id}`)}}
-                                        >
-                                            Acquire
-                                        </Button>
-                                    </Box>
-                                </td>
-
-                            </tr>
-                        )) }
-                    </tbody>
-
-                </Table>
-
-            </Sheet>
+            </Table>
         </Box>
     );
 }
