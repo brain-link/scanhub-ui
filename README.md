@@ -16,6 +16,12 @@
 
 -----------------
 
+THIS REPOSITORY MOVED!
+----------------------
+
+This repository (scanhub-ui) was integrated into the scanhub repository (https://github.com/brain-link/scanhub) to facilitate development of frontend and backend.
+
+
 About
 -----
 
